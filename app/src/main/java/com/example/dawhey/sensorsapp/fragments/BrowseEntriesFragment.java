@@ -2,6 +2,7 @@ package com.example.dawhey.sensorsapp.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ public class BrowseEntriesFragment extends Fragment {
 
     private RecyclerView entriesView;
     private EntriesAdapter entriesAdapter;
+    private FloatingActionButton fab;
     private Entries entries;
     private List<Entry> entriesList;
 
@@ -46,12 +48,37 @@ public class BrowseEntriesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.last_entries, null);
+        View v = inflater.inflate(R.layout.browse_entries, null);
         getActivity().setTitle(getString(R.string.browse_entries_title));
         entriesView = (RecyclerView) v.findViewById(R.id.entries_view);
+        fab = (FloatingActionButton) v.findViewById(R.id.floatingActionButton);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
+
+
         entriesView.setLayoutManager(manager);
+        entriesView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && fab.isShown()) {
+                    fab.hide();
+                } else if (dy < 0 && !fab.isShown()) {
+                    fab.show();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                {
+                    fab.show();
+                }
+
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
         entriesView.setAdapter(entriesAdapter);
+
+
         return v;
     }
 
