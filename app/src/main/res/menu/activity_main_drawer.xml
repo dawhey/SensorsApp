@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/last_entries"
+            android:icon="@drawable/ic_list_black_48dp"
+            android:title="Last entries" />
+        <item
+            android:id="@+id/data_chart"
+            android:icon="@drawable/ic_show_chart_black_48dp"
+            android:title="Data chart" />
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings_black_48dp"
+            android:title="Settings" />
+    </group>
+</menu>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="@dimen/fab_margin"
+        app:cardBackgroundColor="@color/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="21/08/16 12:32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@android:color/white"
+                android:layout_marginEnd="8dp"
+
+                android:id="@+id/markerTimestamp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:id="@+id/markerIcon"
+                android:layout_below="@+id/markerTimestamp"
+                android:layout_alignStart="@+id/markerTimestamp"
+                android:scaleType="fitCenter"
+                android:layout_height="25dp"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:text="33 %"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/markerValue"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_below="@+id/markerTimestamp"
+                android:layout_toEndOf="@+id/markerIcon"
+                android:layout_marginStart="5dp"
+                android:layout_alignBottom="@+id/markerIcon" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
