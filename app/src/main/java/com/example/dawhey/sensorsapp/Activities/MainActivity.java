@@ -35,7 +35,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private SwipeRefreshLayout swipeRefreshLayout;
+    public SwipeRefreshLayout swipeRefreshLayout;
     private FragmentManager fragmentManager;
     private Entries entries;
 
