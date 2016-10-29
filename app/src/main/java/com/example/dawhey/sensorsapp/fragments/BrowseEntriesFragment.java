@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.example.dawhey.sensorsapp.Models.Entries;
 
@@ -123,6 +124,5 @@ public class BrowseEntriesFragment extends Fragment implements View.OnClickListe
         String separator = ",";
         String constraint = year + separator + month + separator + dayOfMonth;
         entriesAdapter.getFilter().filter(constraint);
-        Snackbar.make(getView(), "Entries filtered", Snackbar.LENGTH_SHORT).show();
     }
 }

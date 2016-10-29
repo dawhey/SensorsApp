@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dawhey.sensorsapp.Models.Entry;
 import com.example.dawhey.sensorsapp.R;
@@ -19,10 +20,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-/**
- * Created by dawhey on 21.09.16.
- */
 
 public class EntriesAdapter extends RecyclerView.Adapter<EntriesAdapter.EntryViewHolder> implements Filterable {
 
@@ -79,14 +76,14 @@ public class EntriesAdapter extends RecyclerView.Adapter<EntriesAdapter.EntryVie
         return filter;
     }
 
-    public class EntryViewHolder extends RecyclerView.ViewHolder {
+    class EntryViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView dateView;
-        public TextView humidityview;
-        public TextView temperatureView;
-        public TextView hourView;
+        TextView dateView;
+        TextView humidityview;
+        TextView temperatureView;
+        TextView hourView;
 
-        public EntryViewHolder(View itemView) {
+        EntryViewHolder(View itemView) {
             super(itemView);
 
             dateView = (TextView) itemView.findViewById(R.id.timestampView);
@@ -122,6 +119,14 @@ public class EntriesAdapter extends RecyclerView.Adapter<EntriesAdapter.EntryVie
         protected void publishResults(CharSequence constraint, FilterResults results) {
             entries = (List<Entry>) results.values;
             notifyDataSetChanged();
+            String message;
+
+            if (entries.size() > 0) {
+                message = "Entries filtered";
+            } else {
+                message = "No entries that day";
+            }
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
         }
     }
 }
