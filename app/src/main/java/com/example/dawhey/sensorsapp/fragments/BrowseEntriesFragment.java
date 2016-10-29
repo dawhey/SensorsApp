@@ -22,10 +22,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dawhey on 15.09.16.
- */
-public class LastEntriesFragment extends Fragment {
+public class BrowseEntriesFragment extends Fragment {
 
     private RecyclerView entriesView;
     private EntriesAdapter entriesAdapter;
@@ -40,7 +37,7 @@ public class LastEntriesFragment extends Fragment {
         if (arguments != null) {
             entries = (Entries) arguments.getSerializable("entries");
             if (entries != null) {
-                entriesList = Entries.getLatestEntries(entries);
+                entriesList = entries.getEntries();
             }
         }
         entriesAdapter = new EntriesAdapter(getContext(), entriesList);
@@ -50,7 +47,7 @@ public class LastEntriesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.last_entries, null);
-        getActivity().setTitle(getString(R.string.last_entries_title));
+        getActivity().setTitle(getString(R.string.browse_entries_title));
         entriesView = (RecyclerView) v.findViewById(R.id.entries_view);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         entriesView.setLayoutManager(manager);
@@ -61,7 +58,7 @@ public class LastEntriesFragment extends Fragment {
     @Subscribe
     public void onEntriesEvent(EntriesEvent event) {
         this.entries = event.getEntries();
-        this.entriesList = Entries.getLatestEntries(event.getEntries());
+        this.entriesList = event.getEntries().getEntries();
         entriesAdapter.swap(this.entriesList);
     }
 

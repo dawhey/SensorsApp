@@ -6,6 +6,6 @@
 
     <string name="action_settings">Settings</string>
     <string name="refresh">Refresh</string>
-    <string name="last_entries_title">Last entries</string>
+    <string name="browse_entries_title">Browse entries</string>
     <string name="data_chart_title">Data chart</string>
 </resources>

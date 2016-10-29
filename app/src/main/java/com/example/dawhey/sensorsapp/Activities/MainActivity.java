@@ -1,11 +1,8 @@
 package com.example.dawhey.sensorsapp.Activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
@@ -25,7 +22,7 @@ import com.example.dawhey.sensorsapp.Models.Entries;
 import com.example.dawhey.sensorsapp.R;
 import com.example.dawhey.sensorsapp.Utilities.EntriesEvent;
 import com.example.dawhey.sensorsapp.fragments.DataChartFragment;
-import com.example.dawhey.sensorsapp.fragments.LastEntriesFragment;
+import com.example.dawhey.sensorsapp.fragments.BrowseEntriesFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -54,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         visibleFragmentId = application.getFragmentId();
         switch (application.getFragmentId()) {
             case R.id.last_entries:
-                fragment = new LastEntriesFragment();
+                fragment = new BrowseEntriesFragment();
                 swipeRefreshLayout.setEnabled(true);
 
                 break;
@@ -64,7 +61,7 @@ public class MainActivity extends AppCompatActivity
 
                 break;
             default:
-                fragment = new LastEntriesFragment();
+                fragment = new BrowseEntriesFragment();
                 swipeRefreshLayout.setEnabled(true);
         }
 
@@ -169,14 +166,14 @@ public class MainActivity extends AppCompatActivity
         application.setFragmentId(id);
 
         if (id == R.id.last_entries) {
-            fragmentClass = LastEntriesFragment.class;
+            fragmentClass = BrowseEntriesFragment.class;
             swipeRefreshLayout.setEnabled(true);
 
         } else if (id == R.id.data_chart) {
             fragmentClass = DataChartFragment.class;
             swipeRefreshLayout.setEnabled(false);
         }  else {
-            fragmentClass = LastEntriesFragment.class;
+            fragmentClass = BrowseEntriesFragment.class;
         }
 
         try {

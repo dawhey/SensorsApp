@@ -21,7 +21,12 @@ public class Entries implements Serializable {
      *     The entries
      */
     public List<Entry> getEntries() {
-        return entries;
+        List<Entry> reversedEntries = new ArrayList<>();
+
+        for (int i = entries.size() - 1; i >= 0; i--) {
+            reversedEntries.add(entries.get(i));
+        }
+        return reversedEntries;
     }
 
     /**
