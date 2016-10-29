@@ -50,6 +50,7 @@ public class LastEntriesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.last_entries, null);
+        getActivity().setTitle(getString(R.string.last_entries_title));
         entriesView = (RecyclerView) v.findViewById(R.id.entries_view);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         entriesView.setLayoutManager(manager);

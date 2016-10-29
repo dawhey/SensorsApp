@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.dawhey.sensorsapp.Activities.MainActivity;
 import com.example.dawhey.sensorsapp.Models.ChartEntry;
@@ -34,6 +35,7 @@ public class DataChartFragment extends Fragment implements OnChartValueSelectedL
     private LineChart chart;
     private Entries entries;
     private List<Entry> entriesList;
+    private ProgressBar progressBar;
     private LineData lineData;
 
     @Override
@@ -54,10 +56,9 @@ public class DataChartFragment extends Fragment implements OnChartValueSelectedL
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.data_chart, null);
         chart = (LineChart) v.findViewById(R.id.chart);
+        progressBar = (ProgressBar) v.findViewById(R.id.chart_progress_bar);
         chart.setNoDataText("");
-        MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.swipeRefreshLayout.setRefreshing(true);
-
+        getActivity().setTitle(getString(R.string.data_chart_title));
         if (this.entries != null) {
             new InitializeChartTask().execute(this.entries);
         }
@@ -155,8 +156,14 @@ public class DataChartFragment extends Fragment implements OnChartValueSelectedL
 
     private class InitializeChartTask extends AsyncTask<Entries, Void, Void> {
 
+
         @Override
         protected Void doInBackground(Entries... params) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             if (isVisible()) {
                 lineData = getLineData(params[0]);
             }
@@ -167,8 +174,7 @@ public class DataChartFragment extends Fragment implements OnChartValueSelectedL
         protected void onPostExecute(Void aVoid) {
             if (isVisible()) {
                 initializeChart();
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.swipeRefreshLayout.setRefreshing(false);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         }
     }

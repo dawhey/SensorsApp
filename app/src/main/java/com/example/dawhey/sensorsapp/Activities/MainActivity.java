@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.dawhey.sensorsapp.Api.SensorsApiClient;
 import com.example.dawhey.sensorsapp.Api.ServiceGenerator;
+import com.example.dawhey.sensorsapp.Application;
 import com.example.dawhey.sensorsapp.Models.Entries;
 import com.example.dawhey.sensorsapp.R;
 import com.example.dawhey.sensorsapp.Utilities.EntriesEvent;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     public SwipeRefreshLayout swipeRefreshLayout;
     private FragmentManager fragmentManager;
     private Entries entries;
+    private int visibleFragmentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +47,28 @@ public class MainActivity extends AppCompatActivity
 
         initActivity();
         fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, new LastEntriesFragment()).commit();
-        swipeRefreshLayout.setEnabled(true);
-        setTitle("Last Entries");
+        Fragment fragment;
+
+        Application application = (Application) getApplication();
+
+        visibleFragmentId = application.getFragmentId();
+        switch (application.getFragmentId()) {
+            case R.id.last_entries:
+                fragment = new LastEntriesFragment();
+                swipeRefreshLayout.setEnabled(true);
+
+                break;
+            case R.id.data_chart:
+                fragment = new DataChartFragment();
+                swipeRefreshLayout.setEnabled(false);
+
+                break;
+            default:
+                fragment = new LastEntriesFragment();
+                swipeRefreshLayout.setEnabled(true);
+        }
+
+        fragmentManager.beginTransaction().replace(R.id.container,fragment).commit();
         downloadEntries();
     }
 
@@ -75,7 +96,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void downloadEntries() {
-        swipeRefreshLayout.setRefreshing(true);
+        if (visibleFragmentId != R.id.data_chart) {
+            swipeRefreshLayout.setRefreshing(true);
+        }
         SensorsApiClient service = ServiceGenerator.createService(SensorsApiClient.class);
         Call<Entries> entriesCall = service.getEntries();
         entriesCall.enqueue(new Callback<Entries>() {
@@ -139,13 +162,16 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
         Class fragmentClass;
+        Application application = (Application) getApplication();
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        application.setFragmentId(id);
 
         if (id == R.id.last_entries) {
             fragmentClass = LastEntriesFragment.class;
             swipeRefreshLayout.setEnabled(true);
+
         } else if (id == R.id.data_chart) {
             fragmentClass = DataChartFragment.class;
             swipeRefreshLayout.setEnabled(false);
