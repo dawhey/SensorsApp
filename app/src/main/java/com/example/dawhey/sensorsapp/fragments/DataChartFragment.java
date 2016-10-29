@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.example.dawhey.sensorsapp.Activities.MainActivity;
 import com.example.dawhey.sensorsapp.Models.ChartEntry;
 import com.example.dawhey.sensorsapp.Models.Entries;
 import com.example.dawhey.sensorsapp.Models.Entry;
@@ -46,7 +45,7 @@ public class DataChartFragment extends Fragment implements OnChartValueSelectedL
         if (arguments != null) {
             entries = (Entries) arguments.getSerializable("entries");
             if (entries != null) {
-                entriesList = Entries.getLatestEntries(entries);
+                entriesList = entries.getEntries();
             }
         }
     }
@@ -127,7 +126,7 @@ public class DataChartFragment extends Fragment implements OnChartValueSelectedL
     @Subscribe
     public void onEntriesEvent(EntriesEvent event) {
         this.entries = event.getEntries();
-        this.entriesList = Entries.getLatestEntries(event.getEntries());
+        this.entriesList = event.getEntries().getEntries();
         new InitializeChartTask().execute(this.entries);
     }
 

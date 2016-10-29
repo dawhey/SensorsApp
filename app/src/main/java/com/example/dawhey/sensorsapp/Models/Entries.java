@@ -21,12 +21,7 @@ public class Entries implements Serializable {
      *     The entries
      */
     public List<Entry> getEntries() {
-        List<Entry> reversedEntries = new ArrayList<>();
-
-        for (int i = entries.size() - 1; i >= 0; i--) {
-            reversedEntries.add(entries.get(i));
-        }
-        return reversedEntries;
+        return entries;
     }
 
     /**
@@ -38,12 +33,12 @@ public class Entries implements Serializable {
         this.entries = entries;
     }
 
-    public static List<Entry> getLatestEntries(Entries entries) {
-        List<Entry> lastEntries = new ArrayList<>();
+    public List<Entry> getReversedEntries() {
+        List<Entry> reversedEntries = new ArrayList<>();
 
-        for(int counter = entries.getEntries().size() - 1; counter >= entries.getEntries().size() - 10; counter--){
-            lastEntries.add(entries.getEntries().get(counter));
+        for (int i = entries.size() - 1; i >= 0; i--) {
+            reversedEntries.add(entries.get(i));
         }
-        return lastEntries;
+        return reversedEntries;
     }
 }

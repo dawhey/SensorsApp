@@ -1,14 +1,17 @@
 package com.example.dawhey.sensorsapp.fragments;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import com.example.dawhey.sensorsapp.Models.Entries;
 
@@ -21,9 +24,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class BrowseEntriesFragment extends Fragment {
+public class BrowseEntriesFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     private RecyclerView entriesView;
     private EntriesAdapter entriesAdapter;
@@ -39,7 +43,7 @@ public class BrowseEntriesFragment extends Fragment {
         if (arguments != null) {
             entries = (Entries) arguments.getSerializable("entries");
             if (entries != null) {
-                entriesList = entries.getEntries();
+                entriesList = entries.getReversedEntries();
             }
         }
         entriesAdapter = new EntriesAdapter(getContext(), entriesList);
@@ -52,8 +56,8 @@ public class BrowseEntriesFragment extends Fragment {
         getActivity().setTitle(getString(R.string.browse_entries_title));
         entriesView = (RecyclerView) v.findViewById(R.id.entries_view);
         fab = (FloatingActionButton) v.findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
-
 
         entriesView.setLayoutManager(manager);
         entriesView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -85,7 +89,7 @@ public class BrowseEntriesFragment extends Fragment {
     @Subscribe
     public void onEntriesEvent(EntriesEvent event) {
         this.entries = event.getEntries();
-        this.entriesList = event.getEntries().getEntries();
+        this.entriesList = event.getEntries().getReversedEntries();
         entriesAdapter.swap(this.entriesList);
     }
 
@@ -99,5 +103,26 @@ public class BrowseEntriesFragment extends Fragment {
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Calendar calendar = Calendar.getInstance();
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                this,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        String separator = ",";
+        String constraint = year + separator + month + separator + dayOfMonth;
+        entriesAdapter.getFilter().filter(constraint);
+        Snackbar.make(getView(), "Entries filtered", Snackbar.LENGTH_SHORT).show();
     }
 }

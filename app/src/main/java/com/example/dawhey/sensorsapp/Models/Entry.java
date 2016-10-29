@@ -9,7 +9,9 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 @Generated("org.jsonschema2pojo")
@@ -145,5 +147,18 @@ public class Entry implements Serializable {
             e.printStackTrace();
         }
         return formattedTimestamp;
+    }
+
+    public Calendar getCalendar() {
+        TimeZone timeZone = TimeZone.getTimeZone("GMT");
+        DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss z");
+        dateFormat.setTimeZone(timeZone);
+        Calendar calendar = new GregorianCalendar(timeZone);
+        try {
+            calendar.setTime(dateFormat.parse(timestamp));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return calendar;
     }
 }
