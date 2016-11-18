@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "558208252820",
+    "firebase_url": "https://sensorsapp-ec48f.firebaseio.com",
+    "project_id": "sensorsapp-ec48f",
+    "storage_bucket": "sensorsapp-ec48f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558208252820:android:0e5626fd63294121",
+        "android_client_info": {
+          "package_name": "com.example.dawhey.sensorsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "558208252820-l75s2o506vlqack8b272qt9j5alge6oh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBsZLIpwbecZifKuBAPgfVGwNEf6c31bc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
