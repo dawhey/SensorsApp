@@ -23,6 +23,7 @@ import com.example.dawhey.sensorsapp.R;
 import com.example.dawhey.sensorsapp.Utilities.EntriesEvent;
 import com.example.dawhey.sensorsapp.fragments.DataChartFragment;
 import com.example.dawhey.sensorsapp.fragments.BrowseEntriesFragment;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,6 +34,8 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TOPIC_NAME = "warnings";
+
     public SwipeRefreshLayout swipeRefreshLayout;
     private FragmentManager fragmentManager;
     private Entries entries;
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_NAME);
+        Log.d("FCM", "Subscribed to warnings topic");
 
         initActivity();
         fragmentManager = getSupportFragmentManager();
